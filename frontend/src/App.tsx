@@ -9,7 +9,7 @@ function App() {
   const [message, setMessage] = useState("");
   const createShortLink = async () => {
     try {
-      const getShortUrl = fetch("api/short", {
+      const getShortUrl = fetch("https://shortnerme.up.railway.app/api/short", {
         method: "POST",
         body: JSON.stringify({ link }),
         headers: {
