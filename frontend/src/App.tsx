@@ -23,7 +23,7 @@ function App() {
       }
       setMessage(message)
     } catch (error) {
-      setMessage(error["message"])
+      setMessage("something went wrong")
     }
   };
   const handleModalOpen = () => {
