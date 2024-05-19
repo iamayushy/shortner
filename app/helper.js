@@ -1,4 +1,4 @@
-async function checkValidUrl (link) {
+function checkValidUrl (link) {
     try {
         new URL(link)
         return true

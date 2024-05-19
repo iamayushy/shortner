@@ -5,6 +5,7 @@ const {SHORTLY_DOMAIN} = process.env;
 async function createShortLink(req, res) {
     try {
         const { link } = req.body;
+        console.log(link);
         if (link && checkValidUrl(link)) {
             const shortText = shortLink(link);
             const writeToDB = await shortSchema.create({

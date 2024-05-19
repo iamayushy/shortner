@@ -8,24 +8,18 @@ const { getShortUrl } = require("./app/controller/short.controller");
 
 const PORT = process.env.PORT || 3000;
 const { SHORTLY_DOMAIN } = process.env;
-const whitelist = [SHORTLY_DOMAIN];
+const whitelist = [SHORTLY_DOMAIN, "http://localhost:5173"];
 const app = express();
 
-const corsOptions = {
-    origin: function (origin, callback) {
-      if (whitelist.indexOf(origin) !== -1 || !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-  };
-
-app.use(cors(corsOptions));
-connectDatabase();
-app.use(express.json());
-app.use("/api", shortlinkRoutes);
-app.get("/:shortId", getShortUrl);
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+// };
 app.get("/_healthz", async (req, res) => {
   try {
     return res.status(200).json({ status: "ok" });
@@ -33,6 +27,11 @@ app.get("/_healthz", async (req, res) => {
     return res.status(500).json({ status: "Error", message: error });
   }
 });
+// app.use(cors(corsOptions));
+connectDatabase();
+app.use(express.json());
+app.use("/api", shortlinkRoutes);
+app.get("/:shortId", getShortUrl);
 
 app.listen(PORT, () => {
   console.log("Server running on port :" + PORT);
