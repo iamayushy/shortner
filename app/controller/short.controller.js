@@ -1,6 +1,6 @@
 const { checkValidUrl, shortLink } = require("../helper");
 const shortSchema = require("../models/short.model");
-const {SHORTLY_DOMAIN} = process.env;
+const {SERVER_DOMAIN} = process.env;
 
 async function createShortLink(req, res) {
     try {
@@ -16,7 +16,7 @@ async function createShortLink(req, res) {
 
             if (writeToDB) {
                 return res.status(200).json({
-                    url: `${SHORTLY_DOMAIN}/${shortText}`,
+                    url: `${SERVER_DOMAIN}/${shortText}`,
                 });
             }
             return res.status(200).json({ shortUrl: shortText, link });
@@ -39,7 +39,7 @@ async function getTotalClicks(req, res) {
         const getTotalClicks = await shortSchema.findOne({ shortId });
         const {clicks, shortId: shortText} = getTotalClicks;
         return res.status(200).json({
-            url: `${SHORTLY_DOMAIN}/${shortText}`,
+            url: `${SERVER_DOMAIN}/${shortText}`,
             clicks
         })
     } catch (error) {
