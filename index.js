@@ -1,5 +1,4 @@
 const express = require("express");
-const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
 const { connectDatabase } = require("./app/db");
@@ -11,15 +10,6 @@ const { SHORTLY_DOMAIN } = process.env;
 const whitelist = [SHORTLY_DOMAIN];
 const app = express();
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-};
 app.get("/_healthz", async (req, res) => {
   try {
     return res.status(200).json({ status: "ok" });
