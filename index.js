@@ -7,8 +7,20 @@ const { getShortUrl } = require("./app/controller/short.controller");
 
 const PORT = process.env.PORT || 3000;
 const { SHORTLY_DOMAIN } = process.env;
+console.log("white listing", SHORTLY_DOMAIN);
 const whitelist = [SHORTLY_DOMAIN];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
 const app = express();
+
+app.use(cors(corsOptions));
 
 app.get("/_healthz", async (req, res) => {
   try {
@@ -17,7 +29,6 @@ app.get("/_healthz", async (req, res) => {
     return res.status(500).json({ status: "Error", message: error });
   }
 });
-// app.use(cors(corsOptions));
 connectDatabase();
 app.use(express.json());
 app.use("/api", shortlinkRoutes);
