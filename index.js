@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors"); // 1. Added missing cors require
 dotenv.config();
 const { connectDatabase } = require("./app/db");
 const shortlinkRoutes = require("./app/routes/short.route");
@@ -20,7 +21,7 @@ const corsOptions = {
 };
 const app = express();
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // 2. Correctly applying CORS options
 
 app.get("/_healthz", async (req, res) => {
   try {
@@ -35,8 +36,6 @@ app.use("/api", shortlinkRoutes);
 app.get("/:shortId", getShortUrl);
 
 app.listen(PORT, () => {
-  console.log({
-    domain:SHORTLY_DOMAIN,
-    PORT,
-  });
+  console.log(`Server running on domain: ${SHORTLY_DOMAIN} and port: ${PORT}`); // 3. Improved logging for clarity
 });
+
