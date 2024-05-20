@@ -35,5 +35,8 @@ app.use("/api", shortlinkRoutes);
 app.get("/:shortId", getShortUrl);
 
 app.listen(PORT, () => {
-  console.log("Server running on port :" + PORT);
+  console.log({
+    domain:SHORTLY_DOMAIN,
+    PORT,
+  });
 });
